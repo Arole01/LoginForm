@@ -7,9 +7,10 @@ export const Home = () => {
     const { user} = useContext(AppContext)
     if(!user){
         return (
-            <div>
+            <div className="link-container">
                 <h1>
-                    Welcome Visitor,kindly login to use our services better
+                    Welcome Visitor,kindly 
+                    <Link to ="/login">Login</Link> to use our services better
                 </h1>
             </div>
         )

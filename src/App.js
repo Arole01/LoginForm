@@ -1,12 +1,22 @@
 import React from 'react'
 import { AppProvider } from './Context'
-
+import { BrowserRouter,Route, Routes, Link } from 'react-router-dom'
+import {Login} from './Login'
 import { Home } from './Home'
-export const App = () => {
+import './App.css' 
+const App = () => {
   return (
-    <div>
-      
-    </div>
+    <AppProvider>
+      <BrowserRouter>
+        <nav>
+           <Link className="pre" to="/">Home</Link> {/*| <Link className="pre" to="/login">Login</Link> */}
+        </nav>
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/login" element={<Login/>}/>
+      </Routes>
+      </BrowserRouter>
+    </AppProvider>
   )
 }
 
