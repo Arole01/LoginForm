@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { AppContext } from './Context'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 export const Login = () => {
     const { login, err, user } = useContext(AppContext)
@@ -11,15 +11,18 @@ export const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // Assuming login returns a promise or boolean
+        
         const checkLogin = await login(typeName, typedPassword)
         if (checkLogin) {
             navigate("/")
         }
     }
 
+    const backgroundColor = user ? '#a0d468' : '#3498db'
+
     return (
-        <div className="login-form">
+    
+        <div className="login-form" style={{ backgroundColor, minHeight: '100vh', padding: '2rem' }}> 
             <form className="form-container" onSubmit={handleSubmit}>
                 <input className="user"
                     type='text'
@@ -34,7 +37,9 @@ export const Login = () => {
                 <button type='submit'>Login</button>
             </form>
             {err && <p style={{ color: "red" }}>{err}</p>}
-            {user && <p>Login successful</p>}
+            {user && <p style={{color: "blue"}}>Login successful</p>}
+
+    
         </div>
     )
 }

@@ -13,18 +13,18 @@ export const AppProvider = ({children})=>{
     })
 
     useEffect(()=>{
-        localStorage.setItem("myLogin",JSON.stringify(user))
-    },[user])
+        localStorage.setItem("myLogin",JSON.stringify(err))
+    },[err])
 
     const login =( username, password)=>{
         if(username==="aninku" && password==="1234"){
             setUser("Mr David")
-            setErr("")
+            
             
             return true
         }else{
             setErr("Invalid credentials")
-            setUser(null)
+        
 
             return false
         }
