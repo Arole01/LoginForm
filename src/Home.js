@@ -3,6 +3,7 @@ import { AppContext } from './Context'
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
+
 export const Home = () => {
     const { user} = useContext(AppContext)
     if(!user){

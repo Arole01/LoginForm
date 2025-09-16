@@ -2,22 +2,22 @@ import { createContext, useState, useEffect } from "react";
 
 export const AppContext = createContext()
 export const AppProvider = ({children})=>{
-    const [user,setUser]=useState(null)
-    const [err,setErr]=useState(()=>{
+    const [user,setUser]=useState(()=>{
         const check = localStorage.getItem("myLogin")
         if (!check || check === "undefined"){
-            return""
+            return null
         }else{
             return JSON.parse(check)
         }
     })
+    const [err,setErr]=useState("")
 
     useEffect(()=>{
-        localStorage.setItem("myLogin",JSON.stringify(err))
-    },[err])
+        localStorage.setItem("myLogin",JSON.stringify(user))
+    },[user])
 
-    const login =( username, password)=>{
-        if(username==="aninku" && password==="1234"){
+    const login =( email, password)=>{
+        if(email==="aninku@gmail.com" && password==="Davids5@"){
             setUser("Mr David")
             
             
