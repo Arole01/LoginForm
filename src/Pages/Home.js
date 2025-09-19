@@ -76,7 +76,7 @@ export const Home = () => {
 
                 {products.map((items)=>
                 
-                <div key = {items._id}>
+                <div className='products' key = {items._id}>
                     <img src={items.imageUrl}></img>
                     <h2>{items.name}</h2>
                     <p>{items.description}</p>
