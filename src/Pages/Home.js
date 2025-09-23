@@ -32,22 +32,35 @@ import axios from 'axios'
 
 export const Home = () => {
     const [products,SetProduct] =useState ([])
+    const [category,SetCategory] =useState("")
+    const [err,setErr] =useState("")
+    const [loading,setLoading] =useState(true)
 
     useEffect(()=>{
+        
+            const fetchProduct=async()=>{
 
-        const fetchProduct=async()=>{
-
+                try {
+            const url = `https://davidbackend-ts7d.onrender.com/api/products?category=${category}`
+            
             // const response = await fetch("https://davidbackend-ts7d.onrender.com/api/products")
             // const data = await response.json()
             // console.log(data)
             //setProduct(data)
 
-            const response = await axios.get("https://davidbackend-ts7d.onrender.com/api/products")
+            const response = await axios.get(`https://davidbackend-ts7d.onrender.com/api/products?category=${category}`)
             console.log(response.data)
             SetProduct(response.data)
-        }
+        } catch (error) {
+        SetProduct([])
+        setErr(error.response?.data?.message)
+    } finally {
+        setLoading(false)
+    }
+    }
         fetchProduct()
-    },[])
+    },[category])
+        
     return (
         <div>
             <section className='hero-container'>
@@ -62,10 +75,18 @@ export const Home = () => {
                 <div className='categories'>
                 <h1>Products Categories</h1>
             <div className='allcategories'>
-                <p className='category-items'>Phones</p>
-                <p className='category-items'>Electronics</p>
-                <p className='category-items'>Accessories</p>
-                <p className='category-items'>Clothings</p>
+                <p className='category-items' onClick={()=>
+                    SetCategory("phones")
+                }>Phones</p>
+                <p className='category-items' onClick={()=>
+                    SetCategory("electronics")}>
+                        Electronics</p>
+                <p className='category-items' onClick={()=>
+                    SetCategory("furnitures")}>
+                        Accessories</p>
+                <p className='category-items'onClick={()=>
+                    SetCategory("cloths")}>
+                        Clothings</p>
                 </div>
                 </div>
                 </section>
@@ -73,7 +94,7 @@ export const Home = () => {
                 <section>
 
                 <h1>Browse through our available products</h1>
-
+                    <div className='allproducts'>
                 {products.map((items)=>
                 
                 <div className='products' key = {items._id}>
@@ -82,13 +103,16 @@ export const Home = () => {
                     <p>{items.description}</p>
                     <h3>${items.price}</h3>
                     <h3>{items.stock} Pieces Available</h3>
+                    <button>Buy</button>
                 </div>
                 
                 
                 )}
+                </div>
 
             </section>
-            {products.length == 0 && <h1>Product Loading!!!</h1>}
+            {products.length === 0 && <h1>{err}</h1>}
+            {products.length < 1 && loading && <h1>Product Loading!!!</h1>}
         </div>
     )
 }

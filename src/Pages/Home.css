@@ -60,9 +60,15 @@
     margin-top: 0;
 }
 
+.allproducts{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 20px;
+}
+
 
 .products {
-    background: orange;
+    background: white;
     border-radius: 20px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
     padding: 50px;
