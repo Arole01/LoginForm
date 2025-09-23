@@ -87,6 +87,9 @@ export const Home = () => {
                 <p className='category-items'onClick={()=>
                     SetCategory("cloths")}>
                         Clothings</p>
+                <p className='category-items'onClick={()=>
+                    SetCategory("")}>
+                        All Products</p>
                 </div>
                 </div>
                 </section>
@@ -103,7 +106,7 @@ export const Home = () => {
                     <p>{items.description}</p>
                     <h3>${items.price}</h3>
                     <h3>{items.stock} Pieces Available</h3>
-                    <button>Buy</button>
+                    <button className='btn'>Buy</button>
                 </div>
                 
                 
