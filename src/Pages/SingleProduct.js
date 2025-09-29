@@ -2,16 +2,28 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import "./SingleProducts.css"
+import RelatedProducts from './RelatedProducts'
 
 export const SingleProduct = () => {
-    const [product,setProduct] = useState([])
+    const [product,setProduct] = useState({})
+    const [related,setRelated] = useState([])
     const id = useParams()
+
 
     useEffect(()=>{
         const fetchProduct = async()=>{
             try {
                 const response= await axios.get(`https://davidbackend-ts7d.onrender.com/api/products/${id.id}`)
+
                 setProduct(response.data)
+
+        const relatedResponse = await axios.get(
+            `https://davidbackend-ts7d.onrender.com/api/products`
+        )
+        const filtered = relatedResponse.data.filter(
+            (p) => p.category === response.data.category && p._id !== response.data._id
+        )
+        setRelated(filtered);
             } catch (error) {
                 console.log("errorsssssss",error)
             }
@@ -25,7 +37,7 @@ return (
                     <div className='allproducts'>
                 
                 <div className='product-card' key = {product._id}>
-                    <img src={product.imageUrl}></img>
+                    <img src={product.imageUrl} alt=''/>
                     <h2>{product.name}</h2>
                     <p>{product.description}</p>
                     <h3>${product.price}</h3>
@@ -34,8 +46,10 @@ return (
                 </div>
                 
                 </div>
-
+                {related.length > 0 && <RelatedProducts related={related}/>}
             </section>
+
+
             
 )
 }
