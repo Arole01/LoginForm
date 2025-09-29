@@ -5,13 +5,13 @@ const RelatedProducts = ({related}) => {
     <div className="related-products">
         <h2>Related Products</h2>
         <div className="related-grid">
-            {related.map((item) =>
-            <div className="related-card" key={item._id}>
-                <img src={item.imageUrl}></img>
-                    <h2>{item.name}</h2>
-                    <p>{item.description}</p>
-                    <h3>${item.price}</h3>
-                    <h3>{item.stock} Pieces Available</h3>
+            {related.map((product) =>
+            <div className="related-card" key={product._id}>
+                <img src={product.imageUrl} alt=''></img>
+                    <h2>{product.name}</h2>
+                    <p>{product.description}</p>
+                    <h3>${product.price}</h3>
+                    <h3>{product.stock} Pieces Available</h3>
                     <button className='btn'>Buy</button>
             </div>)}
         </div>
