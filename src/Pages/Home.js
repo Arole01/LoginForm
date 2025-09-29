@@ -28,11 +28,12 @@ import React, { useState } from 'react'
 import "./Home.css"
 import {useEffect} from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 
 export const Home = () => {
-    const [products,SetProduct] =useState ([])
-    const [category,SetCategory] =useState("")
+    const [products,setProduct] =useState ([])
+    const [category,setCategory] =useState("")
     const [err,setErr] =useState("")
     const [loading,setLoading] =useState(true)
 
@@ -50,9 +51,9 @@ export const Home = () => {
 
             const response = await axios.get(`https://davidbackend-ts7d.onrender.com/api/products?category=${category}`)
             console.log(response.data)
-            SetProduct(response.data)
+            setProduct(response.data)
         } catch (error) {
-        SetProduct([])
+        setProduct([])
         setErr(error.response?.data?.message)
     } finally {
         setLoading(false)
@@ -76,19 +77,19 @@ export const Home = () => {
                 <h1>Products Categories</h1>
             <div className='allcategories'>
                 <p className='category-items' onClick={()=>
-                    SetCategory("phones")
+                    setCategory("phones")
                 }>Phones</p>
                 <p className='category-items' onClick={()=>
-                    SetCategory("electronics")}>
+                    setCategory("electronics")}>
                         Electronics</p>
                 <p className='category-items' onClick={()=>
-                    SetCategory("furnitures")}>
+                    setCategory("furnitures")}>
                         Accessories</p>
                 <p className='category-items'onClick={()=>
-                    SetCategory("cloths")}>
+                    setCategory("cloths")}>
                         Clothings</p>
                 <p className='category-items'onClick={()=>
-                    SetCategory("")}>
+                    setCategory("")}>
                         All Products</p>
                 </div>
                 </div>
@@ -101,7 +102,7 @@ export const Home = () => {
                 {products.map((items)=>
                 
                 <div className='products' key = {items._id}>
-                    <img src={items.imageUrl}></img>
+                    <Link to={`/${items._id}`}><img src={items.imageUrl}></img></Link>
                     <h2>{items.name}</h2>
                     <p>{items.description}</p>
                     <h3>${items.price}</h3>

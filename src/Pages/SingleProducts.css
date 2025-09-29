@@ -1,0 +1,26 @@
+body {
+    background: orange;
+}
+
+.product-card h2{
+    text-align: center;
+}
+
+.product-card p{
+    text-align: center;
+}
+
+.product-card h3{
+    text-align: center;
+}
+
+.btn {
+    display: block;
+    margin: 0 auto
+}
+
+.product-card img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
