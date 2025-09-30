@@ -1,30 +1,31 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import "./SingleProducts.css"
-import RelatedProducts from './RelatedProducts'
+
 
 export const SingleProduct = () => {
     const [product,setProduct] = useState({})
     const [related,setRelated] = useState([])
-    const {id} = useParams()
+    const id = useParams()
 
 
     useEffect(()=>{
         const fetchProduct = async()=>{
             try {
-                const response= await axios.get(`https://davidbackend-ts7d.onrender.com/api/products/${id}`)
+                const response= await axios.get(`https://davidbackend-ts7d.onrender.com/api/products/${id.id}`)
 
                 setProduct(response.data)
 
-        const relatedResponse = await axios.get(
-            `https://davidbackend-ts7d.onrender.com/api/products`
+        const categoryResponse = await axios.get(
+            `https://davidbackend-ts7d.onrender.com/api/products?category=${response.data.category.name}`
         )
-        const filtered = relatedResponse.data.filter(
-            (p) => p.category === response.data.category && p._id !== response.data._id
-        )
-        setRelated(filtered);
-        console.log("Related products:", filtered)
+
+        const filter = categoryResponse.data.filter((allItems)=>allItems._id != response.data._id)
+        console.log(categoryResponse)
+        
+        setRelated(filter);
+        
             } catch (error) {
                 console.log("errorsssssss",error)
             }
@@ -47,11 +48,21 @@ return (
                 </div>
                 
                 </div>
-                {related.length > 0 ? (
-                        <RelatedProducts related={related}/>
-                ) : (
-                    <p>No related products found.</p>
+                
+                <h1>Related products</h1>
+                <div>
+                {related.map((items)=>
+                <div>
+                    <Link to={`/${items._id}`}><img src={items.imageUrl} alt=''></img></Link>
+                    <h2>{items.name}</h2>
+                    <p>{items.description}</p>
+                    <h3>${items.price}</h3>
+                    <h3>{items.stock} Pieces Available</h3>
+                    <button className='btn'>Buy</button>
+                </div>
+                
                 )}
+                </div>
                 
                 
             </section>
