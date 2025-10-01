@@ -15,6 +15,7 @@ export const SingleProduct = () => {
     useEffect(()=>{
         const fetchProduct = async()=>{
             try {
+                setLoading(true)
                 const response= await axios.get(`https://davidbackend-ts7d.onrender.com/api/products/${id.id}`)
 
                 setProduct(response.data)
@@ -22,6 +23,7 @@ export const SingleProduct = () => {
                 if (!response.data.category || !response.data.category.name){
                     setGetCategory(false)
                     setRelated([])
+                    setLoading(false)
                     return
                 }
 
@@ -38,6 +40,10 @@ export const SingleProduct = () => {
         
             } catch (error) {
                 console.log("errorsssssss",error)
+                setGetCategory(false)
+                setRelated([])
+            } finally {
+                setLoading(false)
             }
         }
         fetchProduct()
@@ -61,11 +67,11 @@ return (
                 
                 <h1>Related products</h1>
                 <div className='related-products'>
-                {!getCategory ? (
-                    <p className="no-related">No related products</p>
+                {loading ? (
+                    <p>Loading related products</p>
                 ) : related.length > 0 ? (
                 related.map((items)=> (
-                <div>
+                <div key={items._id}>
                     <Link to={`/${items._id}`}><img src={items.imageUrl} alt=''></img></Link>
                     <h2>{items.name}</h2>
                     <p>{items.description}</p>
