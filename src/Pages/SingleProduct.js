@@ -8,6 +8,7 @@ export const SingleProduct = () => {
     const [product,setProduct] = useState({})
     const [related,setRelated] = useState([])
     const [getCategory, setGetCategory] = useState(true)
+    const [loading, setLoading] = useState(true)
     const id = useParams()
 
 
@@ -60,7 +61,10 @@ return (
                 
                 <h1>Related products</h1>
                 <div className='related-products'>
-                {related.map((items)=>
+                {!getCategory ? (
+                    <p className="no-related">No related products</p>
+                ) : related.length > 0 ? (
+                related.map((items)=> (
                 <div>
                     <Link to={`/${items._id}`}><img src={items.imageUrl} alt=''></img></Link>
                     <h2>{items.name}</h2>
@@ -70,7 +74,9 @@ return (
                     <button className='btnn'>Buy</button>
                     <br/><br/>
                 </div>
-                
+                ))
+            ):(
+                <p className="no-related">No related products in this category</p>
                 )}
                 </div>
                 
