@@ -24,3 +24,13 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+
+.related-products .btnn{
+    color: white;
+    margin-top: 1px;
+    background-color: blue;
+}
+
+.related-products img{
+    
+}

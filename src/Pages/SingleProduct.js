@@ -7,6 +7,7 @@ import "./SingleProducts.css"
 export const SingleProduct = () => {
     const [product,setProduct] = useState({})
     const [related,setRelated] = useState([])
+    const [getCategory, setGetCategory] = useState(true)
     const id = useParams()
 
 
@@ -16,6 +17,14 @@ export const SingleProduct = () => {
                 const response= await axios.get(`https://davidbackend-ts7d.onrender.com/api/products/${id.id}`)
 
                 setProduct(response.data)
+
+                if (!response.data.category || !response.data.category.name){
+                    setGetCategory(false)
+                    setRelated([])
+                    return
+                }
+
+                setGetCategory(true)
 
         const categoryResponse = await axios.get(
             `https://davidbackend-ts7d.onrender.com/api/products?category=${response.data.category.name}`
@@ -50,7 +59,7 @@ return (
                 </div>
                 
                 <h1>Related products</h1>
-                <div>
+                <div className='related-products'>
                 {related.map((items)=>
                 <div>
                     <Link to={`/${items._id}`}><img src={items.imageUrl} alt=''></img></Link>
@@ -58,7 +67,8 @@ return (
                     <p>{items.description}</p>
                     <h3>${items.price}</h3>
                     <h3>{items.stock} Pieces Available</h3>
-                    <button className='btn'>Buy</button>
+                    <button className='btnn'>Buy</button>
+                    <br/><br/>
                 </div>
                 
                 )}
