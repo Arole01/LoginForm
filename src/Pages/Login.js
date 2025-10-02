@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { AppContext } from './authContext'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 // import validator
 import * as Yup from "yup"
 //import hook form
@@ -9,6 +9,7 @@ import {useForm} from "react-hook-form"
 import {yupResolver} from "@hookform/resolvers/yup"
 import axios from 'axios'
 import {toast} from 'react-toastify'
+import "./Login.css"
 
 
 export const Login = () => {
@@ -54,7 +55,7 @@ const {handleSubmit,register,formState:{errors}
                 {errors.email && <p style={{color:"red"}}>{errors.email.message}</p>}
                 <input className="pass" type='password' placeholder='password' {...register("password")}/>
                 {errors.password && <p style={{color:"red"}}>{errors.password.message}</p>}
-                <button type='submit'>Login</button>
+                <button className='submit' type='submit'>Login</button>
             </form>
 
     

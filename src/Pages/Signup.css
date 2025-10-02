@@ -7,3 +7,35 @@ body {
     display: block; 
     margin: 10px 0 5px; 
 }
+
+.bttn{
+    display: block;
+    margin: 20px 0 5px;
+    cursor: pointer;
+}
+
+.bttn:hover {
+    background: #FFECC0;
+}
+.btnnn {
+    display: block;
+    position: absolute;
+    margin: 5px 0 5px;
+    cursor: pointer; 
+}
+
+.btnnn:hover {
+    background: #FFECC0;
+}
+
+input { 
+    width: 50%; 
+    padding: 8px; 
+    margin-bottom: 15px; 
+    border-radius: 5px; 
+    border: 1px solid #ccc; 
+}
+
+input:hover {
+    background: #C2A68C;
+}
