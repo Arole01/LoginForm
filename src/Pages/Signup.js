@@ -5,6 +5,7 @@ import {yupResolver} from "@hookform/resolvers/yup"
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { Link } from "react-router-dom"
+import "./Signup.css"
 
 const schema = Yup.object({
     name:Yup.string().required().trim(),
@@ -31,20 +32,24 @@ const submit = async (data)=> {
     }
 }
     return (
-        <div>
+        <div className="signup-grid">
             <h1>Welcome, kindly provide your information here</h1>
-        <form onSubmit={handleSubmit(submit)}>
+        <form className="form-container" onSubmit={handleSubmit(submit)}>
+            <label>First Name</label>
             <input type="text" placeholder="Your name" {...register("name")}/>
             {errors.name && <p style={{color:"red"}}>{errors.name.message}</p>}
+            <label>Email</label>
             <input type="email" placeholder="your email" {...register("email")}/>
             {errors.email && <p style={{color:"red"}}>{errors.email.message}</p>}
+            <label>Password</label>
             <input type="text" placeholder="your password" {...register("password")}/>
             {errors.password && <p style={{color:"red"}}>{errors.password.message}</p>}
             
             <button disabled={loading}>{loading? "Signing up": "Sign up"}</button>
             </form>
 
-            <p>Already have an account?<Link to="/login"> <button>Login</button></Link></p>
+            <p>Already have an account?
+                <Link to="/login"> <button>Login</button></Link></p>
         </div>
     )
 }

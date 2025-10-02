@@ -1,0 +1,9 @@
+body {
+    background: white;
+}
+
+.form-container label { 
+    font-weight: bold; 
+    display: block; 
+    margin: 10px 0 5px; 
+}
