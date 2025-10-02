@@ -1,23 +1,26 @@
 import React from 'react'
-import { AppProvider } from './Context'
+import { AuthContext } from './Pages/authContext'
 import { BrowserRouter,Route, Routes, Link } from 'react-router-dom'
 import { Home } from './Pages/Home'
 import './App.css' 
 import  {SingleProduct} from "./Pages/SingleProduct"
 import  Signup from "./Pages/Signup"
 import { ToastContainer } from 'react-toastify'
+import {Login} from './Pages/Login'
 const App = () => {
   return (
-    <AppProvider>
+    
       <BrowserRouter>
+      <AuthContext>
       <ToastContainer position='top-right' autoClose={1000}></ToastContainer>
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/:id" element={<SingleProduct/>}/>
         <Route path="/signup" element={<Signup/>}/>
+        <Route path="/login" element={<Login/>}/>
       </Routes>
+      </AuthContext>
       </BrowserRouter>
-    </AppProvider>
   )
 }
 

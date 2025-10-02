@@ -4,6 +4,7 @@ import { useState,useEffect } from "react"
 import {yupResolver} from "@hookform/resolvers/yup"
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import { Link } from "react-router-dom"
 
 const schema = Yup.object({
     name:Yup.string().required().trim(),
@@ -43,7 +44,7 @@ const submit = async (data)=> {
             <button disabled={loading}>{loading? "Signing up": "Sign up"}</button>
             </form>
 
-            <p>Already have an account?<button>Login</button></p>
+            <p>Already have an account?<Link to="/login"> <button>Login</button></Link></p>
         </div>
     )
 }

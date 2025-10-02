@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { AppContext } from './Context'
+import { AppContext } from './authContext'
 import { useNavigate, Link } from 'react-router-dom'
 // import validator
 import * as Yup from "yup"
@@ -7,10 +7,13 @@ import * as Yup from "yup"
 import {useForm} from "react-hook-form"
 // import resolver
 import {yupResolver} from "@hookform/resolvers/yup"
-
+import axios from 'axios'
+import {toast} from 'react-toastify'
 
 
 export const Login = () => {
+    const navigate = useNavigate()
+    const {loginAuth} = useContext(AppContext)
 
     const schema =Yup.object(
     {
@@ -25,16 +28,21 @@ const {handleSubmit,register,formState:{errors}
 
 } = useForm({resolver:yupResolver(schema)})
 
-    const { login, err, user } = useContext(AppContext)
-    const navigate = useNavigate()
 
     // const [typeName, setTypeName] = useState("")
     // const [typedPassword, setTypedPassword] = useState("")
+    // console.log ("data")
+    const Submit = async (data) => {
+        try {
 
-    const Submit =(e) => {
-        const checkLogin =login(e.email,e.password)
-        if (checkLogin) {
+            const response= await axios.post("https://davidbackend-ts7d.onrender.com/api/auth/login", data)
+            console.log(response)
+            loginAuth(response.data)
+            toast.success("Login successful")
             navigate("/")
+        } catch (error) {
+            console.log(error)
+            toast.error(error.response?.data?.message)
         }
     }
 
@@ -48,8 +56,6 @@ const {handleSubmit,register,formState:{errors}
                 {errors.password && <p style={{color:"red"}}>{errors.password.message}</p>}
                 <button type='submit'>Login</button>
             </form>
-            {err && <p style={{ color: "red" }}>{err}</p>}
-            {user && <p style={{color: "blue"}}>Login successful</p>}
 
     
         </div>
