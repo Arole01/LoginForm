@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { AppContext } from './authContext'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 // import validator
 import * as Yup from "yup"
 //import hook form
@@ -13,6 +13,7 @@ import "./Login.css"
 
 
 export const Login = () => {
+    const [loading,setLoading] = useState(false)
     const navigate = useNavigate()
     const {loginAuth} = useContext(AppContext)
 
@@ -35,7 +36,7 @@ const {handleSubmit,register,formState:{errors}
     // console.log ("data")
     const Submit = async (data) => {
         try {
-
+            setLoading(true)
             const response= await axios.post("https://davidbackend-ts7d.onrender.com/api/auth/login", data)
             console.log(response)
             loginAuth(response.data)
@@ -44,6 +45,8 @@ const {handleSubmit,register,formState:{errors}
         } catch (error) {
             console.log(error)
             toast.error(error.response?.data?.message)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -55,10 +58,11 @@ const {handleSubmit,register,formState:{errors}
                 {errors.email && <p style={{color:"red"}}>{errors.email.message}</p>}
                 <input className="pass" type='password' placeholder='password' {...register("password")}/>
                 {errors.password && <p style={{color:"red"}}>{errors.password.message}</p>}
-                <button className='submit' type='submit'>Login</button>
+                <button className='submit' type='submit' disabled={loading}>{loading? "Signing In": "Login In"} </button>
             </form>
 
-    
+            <p>New user?
+                <Link to="/sign up"> <button className="btnnn">Sign up</button></Link></p>
         </div>
     )
 }
