@@ -61,8 +61,8 @@ const {handleSubmit,register,formState:{errors}
                 <button className='submit' type='submit' disabled={loading}>{loading? "Signing In": "Login In"} </button>
             </form>
 
-            <p>New user?
-                <Link to="/sign up"> <button className="btnnn">Sign up</button></Link></p>
+            <p>New user?👇
+                <Link to="/signup"> <button className="btnn">Sign up</button></Link></p>
         </div>
     )
 }

@@ -10,12 +10,13 @@ body {
 
 
 input { 
-    width: 50%; 
+    display: block;
+    width: 20%; 
     padding: 8px; 
     margin-bottom: 10px; 
     margin-top: 20px;
     border-radius: 5px; 
-    border: 1px solid #ccc; 
+    border: 1px solid #ccc;
 }
 
 .submit{
@@ -25,4 +26,9 @@ input {
 
 .submit:hover{
     background: #8D5F8C;
+}
+
+.btnn{
+    display: block;
+    margin: 10px 10px 10px 50px;
 }
