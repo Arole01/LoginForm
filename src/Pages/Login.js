@@ -30,6 +30,7 @@ const {handleSubmit,register,formState:{errors}
 
 } = useForm({resolver:yupResolver(schema)})
 
+const [showPassword, setShowPassword] = useState(false)
 
     // const [typeName, setTypeName] = useState("")
     // const [typedPassword, setTypedPassword] = useState("")
@@ -56,8 +57,14 @@ const {handleSubmit,register,formState:{errors}
             <form className="form-container" onSubmit={handleSubmit(Submit)}>
                 <input className="user" type='text' placeholder='email' {...register("email")}/>
                 {errors.email && <p style={{color:"red"}}>{errors.email.message}</p>}
-                <input className="pass" type='password' placeholder='password' {...register("password")}/>
+                <input className="pass" type={showPassword ? "text" : "password"} placeholder='password' {...register("password")}/>
                 {errors.password && <p style={{color:"red"}}>{errors.password.message}</p>}
+                <div className="checkbox-container">
+                    <input type="checkbox"
+                    id="showPassword"
+                    onChange={(e) => setShowPassword(e.target.checked)}/>
+                    <label htmlFor="showPassword">Show password</label>
+                </div>
                 <button className='submit' type='submit' disabled={loading}>{loading? "Signing In": "Login In"} </button>
             </form>
 
@@ -65,6 +72,6 @@ const {handleSubmit,register,formState:{errors}
                 <Link to="/signup"> <button className="btnn">Sign up</button></Link></p>
         </div>
     )
-}
+} 
 
 export default Login

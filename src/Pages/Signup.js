@@ -20,7 +20,11 @@ const [loading,setLoading] = useState(false)
 const {handleSubmit,register,formState:{errors}
 
 } = useForm({resolver:yupResolver(schema)})
+
+const [showPassword, setShowPassword] = useState(false)
+
 const submit = async (data)=> {
+    
     try {
         setLoading(true)
         const response = await axios.post("https://davidbackend-ts7d.onrender.com/api/auth/register", data)
@@ -42,11 +46,21 @@ const submit = async (data)=> {
             <input type="text" placeholder="Last name" {...register("name")}/>
             {errors.name && <p style={{color:"red"}}>{errors.name.message}</p>}
             <label>Email</label>
-            <input type="email" placeholder="your email" {...register("email")}/>
+            <input type="email" placeholder="Enter your email" {...register("email")}/>
             {errors.email && <p style={{color:"red"}}>{errors.email.message}</p>}
             <label>Password</label>
-            <input type="text" placeholder="your password" {...register("password")}/>
+            <input type={showPassword ? "text" : "password"} placeholder="Enter your password" {...register("password")}/>
             {errors.password && <p style={{color:"red"}}>{errors.password.message}</p>}
+
+            <div className="checkbox-container">
+                    <input 
+                        type="checkbox"
+                        id="showPassword"
+                        checked={showPassword}  
+                        onChange={(e) => setShowPassword(e.target.checked)}
+                    />
+                    <label htmlFor="showPassword">Show Password</label> 
+                </div>
             
             <button className="bttn" disabled={loading}>{loading? "Signing up": "Sign up"}</button>
             </form>
