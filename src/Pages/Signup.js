@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import * as Yup from "yup"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {yupResolver} from "@hookform/resolvers/yup"
 import { toast } from 'react-toastify'
 import axios from 'axios'
@@ -29,10 +29,51 @@ const schema = Yup.object({
 const Signup = () => {
 const [loading,setLoading] = useState(false)
 const [showPassword, setShowPassword] = useState(false)
-const {handleSubmit,register, formState:{errors}
+const [countries, setCountries] = useState([])
+const [cities, setCities] = useState([])
+const [selectedCountry, setSelectedCountry] = useState("")
+const [loadingCities, setLoadingCities] = useState(false)
+const {handleSubmit,register, formState:{errors}, setValue,
 
 
 } = useForm({resolver:yupResolver(schema)})
+
+useEffect(() => {
+    const fetchCountries = async () => {
+        try {
+            const response = await axios.get(
+                "https://countriesnow.space/api/v0.1/countries/positions");
+                
+                const countryList = response.data?.data?.map((c)=> c.name);
+                setCountries(countryList)
+            
+        } catch (error) {
+            toast.error("Failed to load countries")
+        }
+    }
+    fetchCountries();
+}, []);
+
+
+useEffect(() => {
+    const fetchCities = async () => {
+        if (!selectedCountry) return;
+        setLoadingCities(true);
+
+        try {
+            const response = await axios.post(
+                "https://countriesnow.space/api/v0.1/countries/cities",
+                {country: selectedCountry}
+            );
+            setCities(response.data?.data || [])
+        } catch (error) {
+            toast.error("Failed to load cities")
+        } finally {
+            setLoadingCities(false)
+        }
+    }
+    fetchCities();
+}, [selectedCountry]);
 
 
 
@@ -102,11 +143,33 @@ const submit = async (data)=> {
                 {errors.address && <p style={{color:"red"}}>{errors.address.message}</p>}
 
                 <label>Country</label>
-                <input type="text" {...register("country")} placeholder="Enter your country"/>
+                <select {...register("country")}
+                onChange={(e) => {
+                    setSelectedCountry(e.target.value);
+                    setValue("country", e.target.value);
+                    setValue("city", "")
+                }}>
+                <option value="">Select Country</option>
+                {countries.map((country, index) => (
+                    <option key={index} value={country}>
+                        {country}
+                    </option>
+                ))}
+                </select>
                 {errors.country && <p style={{color:"red"}}>{errors.country.message}</p>}
 
                 <label>City</label>
-                <input type="text" {...register("city")} placeholder="Enter your city"/>
+                <select {...register("city")}
+                disabled={!selectedCountry || loadingCities}>
+                    <option value="">
+                        {loadingCities ? "Loading cities..." : "Select City"}
+                    </option>
+                    {cities.map((city, index) => (
+                        <option key={index} value={city}>
+                            {city}
+                        </option>
+                    ))}
+                </select>
                 {errors.city && <p style={{color:"red"}}>{errors.city.message}</p>}
             
             <button className="bttn" disabled={loading}>{loading? "Signing up": "Sign up"}</button>
