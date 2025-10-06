@@ -8,7 +8,8 @@ import { Link } from "react-router-dom"
 import "./Signup.css"
 
 const schema = Yup.object({
-    name:Yup.string().required().trim(),
+    firstname:Yup.string().required().trim(),
+    lastname:Yup.string().required().trim(),
     email:Yup.string().email().required(),
     password:Yup.string().required().min(3).max(10),
         // .matches( /^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,10}$/,
@@ -27,11 +28,13 @@ const schema = Yup.object({
 
 const Signup = () => {
 const [loading,setLoading] = useState(false)
-const {handleSubmit,register,reset, formState:{errors}
+const [showPassword, setShowPassword] = useState(false)
+const {handleSubmit,register, formState:{errors}
+
 
 } = useForm({resolver:yupResolver(schema)})
 
-const [showPassword, setShowPassword] = useState(false)
+
 
 const submit = async (data)=> {
     
@@ -39,10 +42,10 @@ const submit = async (data)=> {
         const { confirmPassword, ...userData} = data;
 
         setLoading(true)
-        const response = await axios.post("https://davidbackend-ts7d.onrender.com/api/auth/register", data)
+        const response = await axios.post("https://davidbackend-ts7d.onrender.com/api/auth/register", userData)
         toast.success(response?.data?.message || "Signup successful")
     } catch (error) {
-        toast.error(error.response.data.message)
+        toast.error(error?.response?.data?.message || "Signup failed")
     }finally{
         setLoading(false)
     }
@@ -52,10 +55,10 @@ const submit = async (data)=> {
             <h1>Welcome, kindly provide your information here</h1>
         <form className="form-container" onSubmit={handleSubmit(submit)}>
             <label>First Name</label>
-            <input type="text" placeholder="First name" {...register("name")}/>
+            <input type="text" placeholder="First name" {...register("firstname")}/>
             {errors.name && <p style={{color:"red"}}>{errors.name.message}</p>}
             <label>Last Name</label>
-            <input type="text" placeholder="Last name" {...register("name")}/>
+            <input type="text" placeholder="Last name" {...register("lastname")}/>
             {errors.name && <p style={{color:"red"}}>{errors.name.message}</p>}
             <label>Email</label>
             <input type="email" placeholder="Enter your email" {...register("email")}/>
@@ -80,12 +83,40 @@ const submit = async (data)=> {
                     />
                     <label htmlFor="showPassword">Show Password</label> 
                 </div>
+
+                <label>Gender</label>
+                <select {...register("gender")}>
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                {errors.gender && <p style={{color:"red"}}>{errors.gender.message}</p>}
+
+                <label>Date of Birth</label>
+                <input type="date" {...register("dob")}/>
+                {errors.dob && <p style={{color:"red"}}>{errors.dob.message}</p>}
+
+
+                <label>Address</label>
+                <input type="text" {...register("address")} placeholder="Enter your address"/>
+                {errors.address && <p style={{color:"red"}}>{errors.address.message}</p>}
+
+                <label>Country</label>
+                <input type="text" {...register("country")} placeholder="Enter your country"/>
+                {errors.country && <p style={{color:"red"}}>{errors.country.message}</p>}
+
+                <label>City</label>
+                <input type="text" {...register("city")} placeholder="Enter your city"/>
+                {errors.city && <p style={{color:"red"}}>{errors.city.message}</p>}
             
             <button className="bttn" disabled={loading}>{loading? "Signing up": "Sign up"}</button>
             </form>
 
             <p>Already have an account?
-                <Link to="/login"> <button className="btnnn">Login</button></Link></p>
+                <Link to="/login"> 
+                <button className="btnnn">Login</button>
+                </Link>
+                </p>
         </div>
     )
 }
