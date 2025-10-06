@@ -13,6 +13,9 @@ const schema = Yup.object({
     password:Yup.string().required().min(3).max(10),
         // .matches( /^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,10}$/,
         //     "Password should contain Capital letter,small letter and a number")
+    phone:Yup.string().required("Phone number is required")
+            .matches(/^[0-9]+$/, "Phone must contain only numbers")
+    .min(10, "Phone must be at least 10 digits"),
     confirmPassword: Yup.string().required("Confirm password id required")
     .oneOf([Yup.ref("password"),null], "Passwords must match"),
     gender:Yup.string().required("Please select your gender"),
@@ -24,7 +27,7 @@ const schema = Yup.object({
 
 const Signup = () => {
 const [loading,setLoading] = useState(false)
-const {handleSubmit,register,formState:{errors}
+const {handleSubmit,register,reset, formState:{errors}
 
 } = useForm({resolver:yupResolver(schema)})
 
@@ -33,6 +36,8 @@ const [showPassword, setShowPassword] = useState(false)
 const submit = async (data)=> {
     
     try {
+        const { confirmPassword, ...userData} = data;
+
         setLoading(true)
         const response = await axios.post("https://davidbackend-ts7d.onrender.com/api/auth/register", data)
         toast.success(response?.data?.message || "Signup successful")
@@ -55,9 +60,16 @@ const submit = async (data)=> {
             <label>Email</label>
             <input type="email" placeholder="Enter your email" {...register("email")}/>
             {errors.email && <p style={{color:"red"}}>{errors.email.message}</p>}
+            <label>Phone number</label>
+            <input type="tel" {...register("phone")} placeholder="Enter your phone number"/>
+            {errors.phone && <p style={{color:"red"}}>
+            {errors.phone.message}</p>}
             <label>Password</label>
             <input type={showPassword ? "text" : "password"} placeholder="Enter your password" {...register("password")}/>
             {errors.password && <p style={{color:"red"}}>{errors.password.message}</p>}
+            <label>Confirm Password</label>
+            <input type={showPassword ? "text" : "password"} placeholder="Confirm your password" {...register("confirmPassword")}/>
+            {errors.confirmPassword && <p style={{color:"red"}}>{errors.confirmPassword.message}</p>}
 
             <div className="checkbox-container">
                     <input 
