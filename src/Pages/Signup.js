@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import * as Yup from "yup"
-import { useState,useEffect } from "react"
+import { useState } from "react"
 import {yupResolver} from "@hookform/resolvers/yup"
 import { toast } from 'react-toastify'
 import axios from 'axios'
@@ -10,9 +10,16 @@ import "./Signup.css"
 const schema = Yup.object({
     name:Yup.string().required().trim(),
     email:Yup.string().email().required(),
-    password:Yup.string().required().min(3).max(10)
+    password:Yup.string().required().min(3).max(10),
         // .matches( /^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,10}$/,
         //     "Password should contain Capital letter,small letter and a number")
+    confirmPassword: Yup.string().required("Confirm password id required")
+    .oneOf([Yup.ref("password"),null], "Passwords must match"),
+    gender:Yup.string().required("Please select your gender"),
+    dob: Yup.date().required("Date of birth is required"),
+    address:Yup.string().required("Address is required"),
+    country: Yup.string().required("Country is required"),
+    city:Yup.string().required("City is required"),
 })
 
 const Signup = () => {

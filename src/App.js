@@ -1,6 +1,6 @@
 import React from 'react'
 import { AuthContext } from './Pages/authContext'
-import { BrowserRouter,Route, Routes, Link } from 'react-router-dom'
+import { BrowserRouter,Route, Routes } from 'react-router-dom'
 import { Home } from './Pages/Home'
 import './App.css' 
 import  {SingleProduct} from "./Pages/SingleProduct"
