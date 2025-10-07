@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import "./Home.css"
 import {useEffect} from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-
+import { CartContext } from './cartContext'
+import { toast } from 'react-toastify'
 
 export const Home = () => {
     const [products,setProduct] =useState ([])
     const [category,setCategory] =useState("")
     const [err,setErr] =useState("")
+    const {addToCart} =useContext(CartContext)
     const [loading,setLoading] =useState(true)
 
     useEffect(()=>{
@@ -81,7 +83,12 @@ export const Home = () => {
                     <p>{items.description}</p>
                     <h3>${items.price}</h3>
                     <h3>{items.stock} Pieces Available</h3>
-                    <button className='btn'>Buy</button>
+                    <button className='btn' onClick={()=>{
+                        addToCart(items._id)
+                        toast.success("Items added to cart")
+                    }}>Add to Cart</button>
+
+                    
                 </div>
                 
                 

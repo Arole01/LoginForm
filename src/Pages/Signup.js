@@ -34,7 +34,10 @@ const [cities, setCities] = useState([])
 const [selectedCountry, setSelectedCountry] = useState("")
 const [loadingCities, setLoadingCities] = useState(false)
 const {handleSubmit,register, formState:{errors}, setValue,
-
+//handleSubmit: Function to safely submit the form (runs validation first).
+//register: Helps connect inputs to the form (tracks values and validation).
+//formState: {errors}: Tracks errors from validation
+//setValue: Manually sets a form field's value (used for country/city).
 
 } = useForm({resolver:yupResolver(schema)})
 
