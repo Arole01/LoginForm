@@ -85,7 +85,6 @@ export const Home = () => {
                     <h3>{items.stock} Pieces Available</h3>
                     <button className='btn' onClick={()=>{
                         addToCart(items._id)
-                        toast.success("Items added to cart")
                     }}>Add to Cart</button>
 
                     

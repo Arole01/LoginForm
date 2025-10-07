@@ -6,6 +6,7 @@ export const CartContext = createContext()
 
 export const CartProvider = ( {children} ) => {
     const [cart,setCart]= useState(null)
+    const [message,setMessage]=useState("")
     const addToCart = async (productId, quantity=1)=>{
         try {
     const authToken =()=>(
@@ -21,7 +22,10 @@ export const CartProvider = ( {children} ) => {
             const response = await axios.post("https://davidbackend-ts7d.onrender.com/api/cart",{productId, quantity },authToken())
 
             setCart(response.data)
+            setMessage(response.data?.message)
+        toast(message)
         } catch (error) {
+            setMessage(error.response?.data?.message)
             console.log(error)
         }
     }
