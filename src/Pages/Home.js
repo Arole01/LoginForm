@@ -84,7 +84,7 @@ export const Home = () => {
                     <h3>${items.price}</h3>
                     <h3>{items.stock} Pieces Available</h3>
                     <button className='btn' onClick={()=>{
-                        addToCart(items._id)
+                        addToCart(items)
                     }}>Add to Cart</button>
 
                     

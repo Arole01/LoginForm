@@ -8,6 +8,7 @@ import  Signup from "./Pages/Signup"
 import { ToastContainer } from 'react-toastify'
 import {Login} from './Pages/Login'
 import { CartProvider } from './Pages/cartContext'
+import { Cart } from './Pages/Cart'
 const App = () => {
   return (
     
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/:id" element={<SingleProduct/>}/>
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/cart" element={<Cart/>}/>
       </Routes>
       </CartProvider>
       </AuthContext>
