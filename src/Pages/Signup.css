@@ -39,3 +39,29 @@ input {
 input:hover {
     background: #C2A68C;
 }
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 10px 0;
+}
+.checkbox-container input[type="checkbox"] {
+    margin: 0; 
+    width: auto;
+    height: auto; 
+    cursor: pointer; 
+}
+.checkbox-container label {
+    margin: 0; 
+    padding: 0; 
+    font-size: 14px;
+    color: #333; 
+    cursor: pointer; 
+    user-select: none;
+}
+
+.checkbox-container:hover {
+    opacity: 0.8; 
+}
+

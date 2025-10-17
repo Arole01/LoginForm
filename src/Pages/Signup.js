@@ -46,7 +46,7 @@ useEffect(() => {
         try {
             const response = await axios.get(
                 "https://countriesnow.space/api/v0.1/countries/positions");
-                
+    //So, this line fetches the data from the API and stores it in response.
                 const countryList = response.data?.data?.map((c)=> c.name);
                 setCountries(countryList)
             
@@ -61,6 +61,7 @@ useEffect(() => {
 useEffect(() => {
     const fetchCities = async () => {
         if (!selectedCountry) return;
+    //This is a condition that checks if selectedCountry is empty or falsy (e.g., an empty string "" or undefined). If no country is selected, it stops the function right there with return;
         setLoadingCities(true);
 
         try {
@@ -69,6 +70,7 @@ useEffect(() => {
                 {country: selectedCountry}
             );
             setCities(response.data?.data || [])
+        //The || [] means "if there's no data, use an empty array" to avoid errors.
         } catch (error) {
             toast.error("Failed to load cities")
         } finally {
