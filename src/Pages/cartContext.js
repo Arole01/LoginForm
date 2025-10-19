@@ -44,8 +44,30 @@ export const CartProvider = ( {children} ) => {
         toast.success(data?.message)
         } catch (error) {
             setMessage(error.response?.data?.message)
-            console.log(error)
+            toast(message)
         }
+    }
+
+    const updateQuantity = async (productId, quantity)=> {
+        try {
+            console.log(productId)
+            const {data} = await axios.put(`https://davidbackend-ts7d.onrender.com/api/cart/${productId}`,{quantity}, authToken())
+            
+            console.log("datasss".data);
+        setCart(data)
+        toast.success(data?.message)
+
+        const response = await axios.get("https://davidbackend-ts7d.onrender.com/api/cart", authToken());
+        } catch (error) {
+            setMessage(error.response?.data?.message)
+            toast(message)
+        }
+    
+        
+    }
+
+    const getTotal =()=> {
+        return cart.items.reduce((cur,acc)=>(cur + acc.product.price))
     }
 
     return (
