@@ -50,6 +50,10 @@ export const CartProvider = ( {children} ) => {
 
     const updateQuantity = async (productId, quantity)=> {
         try {
+            if (quantity <1) {
+                toast.error("Quantity cannot be less than 1")
+                return
+            }
             console.log(productId)
             const {data} = await axios.put(`https://davidbackend-ts7d.onrender.com/api/cart/${productId}`,{quantity}, authToken())
             
@@ -67,11 +71,20 @@ export const CartProvider = ( {children} ) => {
     }
 
     const getTotal =()=> {
-        return cart.items.reduce((cur,acc)=>(cur + acc.product.price))
+        return cart.items.reduce((cur,acc)=>(cur + acc.product.price* acc.quantity),0)
     }
-
+    const removeCart = async (productId)=>{
+        try {
+            const {data} = await axios.delete(`https://davidbackend-ts7d.onrender.com/api/cart/${productId}`, authToken());
+            setCart(data)
+            toast.success("cart removed")
+        } catch (error) {
+            setMessage(error.response?.data?.message)
+            toast(message)
+        }
+    }
     return (
-        <CartContext.Provider value={{addToCart,cart}}>
+        <CartContext.Provider value={{addToCart,cart,getTotal,updateQuantity,removeCart}}>
             {children}
         </CartContext.Provider>
     )
