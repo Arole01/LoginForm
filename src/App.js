@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify'
 import {Login} from './Pages/Login'
 import { CartProvider } from './Pages/cartContext'
 import { Cart } from './Pages/Cart'
+import { Header } from "./Components/Header"
 const App = () => {
   return (
     
@@ -16,6 +17,7 @@ const App = () => {
       <AuthContext>
         <CartProvider>
       <ToastContainer position='top-right' autoClose={1000}></ToastContainer>
+      <Header/>
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/:id" element={<SingleProduct/>}/>
