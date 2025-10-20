@@ -5,6 +5,7 @@ import { FaHome } from 'react-icons/fa'
 import { CartContext } from "../Pages/cartContext"
 import { useContext } from 'react'
 import { AppContext } from '../Pages/authContext'
+import "./Header.css"
 
 export const Header = () => {
   const { cart } = useContext(CartContext);
@@ -12,7 +13,7 @@ export const Header = () => {
   return (
     <header className='header'>
       {user ? <>
-      <p>Welcome {user.name.split(" ")[0]}</p>
+      <p className='note'> Welcome {user.name.split(" ")[0]}</p>
       <nav>
         <Link to={"/cart"}>{cart.items.length}<IoIosCart/></Link>
 
