@@ -10,6 +10,8 @@ import {Login} from './Pages/Login'
 import { CartProvider } from './Pages/cartContext'
 import { Cart } from './Pages/Cart'
 import { Header } from "./Components/Header"
+import { UploadProducts } from './Pages/UploadProducts'
+
 const App = () => {
   return (
     
@@ -24,6 +26,8 @@ const App = () => {
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/cart" element={<Cart/>}/>
+        <Route path="/upload" element={<UploadProducts/>}/>
+        
       </Routes>
       </CartProvider>
       </AuthContext>
