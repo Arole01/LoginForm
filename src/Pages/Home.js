@@ -53,7 +53,7 @@ export const Home = () => {
                 <h1>Products Categories</h1>
             <div className='allcategories'>
                 <p className='category-items' onClick={()=>
-                    setCategory("phones")
+                    setCategory("Phones")
                 }>Phones</p>
                 <p className='category-items' onClick={()=>
                     setCategory("electronics")}>
