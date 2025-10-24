@@ -4,7 +4,7 @@ import {useEffect} from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { CartContext } from './cartContext'
-import { toast } from 'react-toastify'
+
 
 export const Home = () => {
     const [products,setProduct] =useState ([])
