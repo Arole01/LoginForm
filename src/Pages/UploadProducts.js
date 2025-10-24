@@ -7,6 +7,7 @@ import {toast} from 'react-toastify'
 
 export const UploadProducts = () =>{
     const [categories,setCategory]=useState([])
+    const [loading,setLoading] = useState(false)
 
     // const schema =Yup.object(
 
@@ -46,12 +47,15 @@ export const UploadProducts = () =>{
         info.append("category",data.category)
         info.append("image",data.image[0])
     try {
+        setLoading(true)
         const response = await axios.post("https://davidbackend-ts7d.onrender.com/api/products",info,authToken())
         toast.success("product successfully Uploaded")
         reset()
     } catch (error) {
         console.log(error.message)
         toast.error(error.response.data.message)
+    } finally{
+        setLoading(false)
     }
     }
     useEffect(()=>{fetchCategory()},[])
@@ -69,7 +73,8 @@ export const UploadProducts = () =>{
         </select>
         <input type='file' placeholder='Upload product image' {...register("image")}/>
 
-        <button>Submit</button>
+        <button className="bttnn" type='submit' disabled={loading}>{loading? "Uploading": "Upload"}</button>
+            
         </form>
     </div>
     )
