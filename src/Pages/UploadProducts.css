@@ -12,3 +12,16 @@ input {
     border-radius: 5px; 
     border: 1px solid #ccc;
 }
+
+.click{
+    display: block;
+    margin: 10px 0 5px;
+    cursor: pointer;
+}
+
+.click:hover{
+    background: #5C3E94;
+}
+
+
+

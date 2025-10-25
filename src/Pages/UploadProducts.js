@@ -66,7 +66,7 @@ export const UploadProducts = () =>{
     return (
     <div>
         <form onSubmit={handleSubmit(UploadProduct)}>
-        <p>Upload your product below</p>
+        <p>Upload Your Product Below</p>
         <input type='text' placeholder='product name' {...register("name")}/>
         {errors.name && <p style={{color:"red"}}>{errors.name.message}</p>}
         <input type='text' placeholder='description' {...register("description")}/>
@@ -76,12 +76,12 @@ export const UploadProducts = () =>{
         <input type='number' placeholder='product stock' {...register("stock")}/>
         {errors.stock && <p style={{color:"red"}}>{errors.stock.message}</p>}
         <select {...register("category")}>
-            <option>Choose Category</option>
+            <option className='category'>Choose Category</option>
             {categories.map((c)=><option key={c._id} value={c._id}>{c.name}</option>)}
         </select>
         <input type='file' placeholder='Upload product image' {...register("image")}/>
 
-        <button className="bttnn" type='submit' disabled={loading}>{loading? "Uploading": "Upload"}</button>
+        <button className="click" type='submit' disabled={loading}>{loading? "Uploading": "Upload"}</button>
             
         </form>
     </div>
