@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from "yup"
 import axios from 'axios'
 import {toast} from 'react-toastify'
-
+import "./UploadProducts.css"
 export const UploadProducts = () =>{
     const [categories,setCategory]=useState([])
     const [loading,setLoading] = useState(false)
