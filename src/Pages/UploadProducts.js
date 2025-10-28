@@ -4,10 +4,11 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from "yup"
 import axios from 'axios'
 import {toast} from 'react-toastify'
-import "./UploadProducts.css"
+// import "./UploadProducts.css"
 export const UploadProducts = () =>{
     const [categories,setCategory]=useState([])
     const [loading,setLoading] = useState(false)
+    const [products,setproducts]= useState([])
 
     const schema =Yup.object(
 
@@ -23,7 +24,7 @@ export const UploadProducts = () =>{
 
         } = useForm({resolver:yupResolver(schema)})
 
-
+        
 
         const authToken =()=>(
             {
@@ -39,6 +40,28 @@ export const UploadProducts = () =>{
         } catch (error) {
             console.log(error.message)
             toast.error(error.message)
+        }
+    }
+
+    const checklocalstorage = localStorage.getItem("user")
+    const parsedUser = JSON.parse(checklocalstorage)
+    console.log(parsedUser.role)
+
+    const getAllProducts = async()=>{
+        try {
+            const {data} = await axios.get("https://davidbackend-ts7d.onrender.com/api/products")
+            setproducts(data)
+        } catch (error) {
+            
+        }
+    }
+
+    const deleteproduct = async(productid)=>{
+        try {
+            axios.delete(`https://davidbackend-ts7d.onrender.com/api/products/${productid}`,authToken())
+            toast.success("Item successfully deleted")
+        } catch (error) {
+
         }
     }
 
@@ -62,8 +85,10 @@ export const UploadProducts = () =>{
         setLoading(false)
     }
     }
-    useEffect(()=>{fetchCategory()},[])
-    return (
+    useEffect(()=>{fetchCategory() ;getAllProducts()},[])
+
+    { return parsedUser.role !== "admin" ? <h1>Page restricted to admin</h1>: (
+        <>
     <div>
         <form onSubmit={handleSubmit(UploadProduct)}>
         <p>Upload Your Product Below</p>
@@ -85,7 +110,22 @@ export const UploadProducts = () =>{
             
         </form>
     </div>
+
+    <div>
+        <div className='allProducts'>
+            {products.map((items)=>
+            <div key={items._id} className='product-card'>
+                <h2>{items.name}</h2>
+                <p>{items.description}</p>
+                <h3>#{items.price}</h3>
+                <h3>{items.stock} Pieces available</h3>
+                <button onClick={()=>{
+                    deleteproduct(items._id)
+                }}>Delete</button>
+            </div>
+            )}
+        </div>
+    </div>
+    </>
     )
-}
-
-
+}}
