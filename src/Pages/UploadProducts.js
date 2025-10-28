@@ -38,14 +38,14 @@ export const UploadProducts = () =>{
             setCategory(data)
 
         } catch (error) {
-            console.log(error.message)
+            
             toast.error(error.message)
         }
     }
 
     const checklocalstorage = localStorage.getItem("user")
     const parsedUser = JSON.parse(checklocalstorage)
-    console.log(parsedUser.role)
+    
 
     const getAllProducts = async()=>{
         try {
@@ -79,7 +79,7 @@ export const UploadProducts = () =>{
         toast.success("product successfully Uploaded")
         reset()
     } catch (error) {
-        console.log(error.message)
+        
         toast.error(error.response.data.message)
     } finally{
         setLoading(false)
