@@ -1,9 +1,36 @@
 import React, {useContext} from 'react'
 import { CartContext } from './cartContext'
+import axios from 'axios'
+import { AppContext } from './authContext'
 
 export const Cart = () => {
-    const { cart, updateQuantity, getTotal, removeCart } = useContext(CartContext)
+    const { cart, updateQuantity, getTotal, removeCart, clearCart } = useContext(CartContext)
 
+        const {user}=useContext(AppContext)
+    const authToken =()=>(
+        {
+            headers:{Authorization : `Bearer ${localStorage.getItem("token")}`}
+        }
+    )
+
+    const handleCheckout = async ()=> {
+        try {
+
+            const orderRes = await axios.post("https://davidbackend-ts7d.onrender.com/api/orders",{
+                items:cart.items,
+                totalAmount:getTotal()
+            },authToken())
+
+            const orderId = orderRes.data._id
+
+            const payment = await axios.post("https://davidbackend-ts7d.onrender.com/api/payments/init",{orderId,customerEmail:user.email},authToken())
+
+            window.location.href=payment.data.data.checkout_url
+            clearCart()
+        } catch (error) {
+            console.log(error)
+        }
+    }
     if (!cart || !cart.items || cart.items.length === 0)
         return <h2>Your cart is currently empty</h2>
 
@@ -27,6 +54,8 @@ export const Cart = () => {
         <h2>
             totalprice:{Math.round(getTotal())}
         </h2>
+
+        <button onClick={handleCheckout}>Proceed to checkout</button>
         </div>
     )
 }

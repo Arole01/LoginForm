@@ -80,11 +80,19 @@ export const CartProvider = ( {children} ) => {
             toast.success("cart removed")
         } catch (error) {
             setMessage(error.response?.data?.message)
-            toast(message)
+            toast(error.response?.data?.message)
         }
     }
+        const clearCart =async ()=>{
+            try {
+                await axios.delete (`https://davidbackend-ts7d.onrender.com/api/cart`)
+                toast.success('cart cleared')
+            } catch (error) {
+                toast(error.response?.data?.message)
+            }
+        }
     return (
-        <CartContext.Provider value={{addToCart,cart,getTotal,updateQuantity,removeCart}}>
+        <CartContext.Provider value={{addToCart,cart,getTotal,updateQuantity,removeCart,clearCart}}>
             {children}
         </CartContext.Provider>
     )

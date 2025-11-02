@@ -87,7 +87,7 @@ export const UploadProducts = () =>{
     }
     useEffect(()=>{fetchCategory() ;getAllProducts()},[])
 
-    { return parsedUser.role !== "admin" ? <h1>Page restricted to admin</h1>: (
+    return parsedUser.role !== "admin" ? <h1>Page restricted to admin</h1>: (
         <>
     <div>
         <form onSubmit={handleSubmit(UploadProduct)}>
@@ -128,4 +128,4 @@ export const UploadProducts = () =>{
     </div>
     </>
     )
-}}
+}
