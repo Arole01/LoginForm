@@ -11,6 +11,7 @@ import { CartProvider } from './Pages/cartContext'
 import { Cart } from './Pages/Cart'
 import { Header } from "./Components/Header"
 import { UploadProducts } from './Pages/UploadProducts'
+import { Payment } from './Pages/Payment'
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/login" element={<Login/>}/>
         <Route path="/cart" element={<Cart/>}/>
         <Route path="/upload" element={<UploadProducts/>}/>
+        <Route path="/payment-success" element={<Payment/>}/>
         
       </Routes>
       </CartProvider>
