@@ -1,9 +1,10 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import { CartContext } from './cartContext'
 import axios from 'axios'
 import { AppContext } from './authContext'
 
 export const Cart = () => {
+    const [loading,setLoading] = useState(false)
     const { cart, updateQuantity, getTotal, removeCart, clearCart } = useContext(CartContext)
 
         const {user}=useContext(AppContext)
@@ -20,15 +21,18 @@ export const Cart = () => {
                 items:cart.items,
                 totalAmount:getTotal()
             },authToken())
-
+                setLoading(true)
             const orderId = orderRes.data._id
 
             const payment = await axios.post("https://davidbackend-ts7d.onrender.com/api/payments/init",{orderId,customerEmail:user.email},authToken())
 
             window.location.href=payment.data.data.checkout_url
             clearCart()
+            
         } catch (error) {
             console.log(error)
+        } finally {
+            setLoading(false)
         }
     }
     if (!cart || !cart.items || cart.items.length === 0)
@@ -55,7 +59,7 @@ export const Cart = () => {
             totalprice:{Math.round(getTotal())}
         </h2>
 
-        <button onClick={handleCheckout}>Proceed to checkout</button>
+        <button onClick={handleCheckout} disabled={loading}>{loading? "Proceeding": "Proceed to checkout"}</button>
         </div>
     )
 }
